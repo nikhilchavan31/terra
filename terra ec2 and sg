@@ -1,0 +1,46 @@
+terraform {
+  required_version = "~> 1.1"
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
+  }
+}
+ 
+# Configure the AWS Provider
+provider "aws" {
+  region = "ap-south-1"
+  access_key = "AKIAW3RA454HJGKQ3GVCO5O"
+  secret_key = "yqHVI2fB415KgGCVGHFVHfm2IyVUATO2B"
+}
+resource "aws_instance" "myec2" {
+  ami           = "ami-0e35ddab05955cf57"
+  instance_type = "t2.micro"
+  vpc_security_group_ids = [aws_security_group.mysg.id]
+tags = {
+    Name = "myinstance"
+}
+}
+ 
+resource "aws_security_group" "mysg" {
+egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+  ingress {
+    from_port        = 22
+    to_port          = 22
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+  }
+  ingress {
+    from_port        = 80
+    to_port          = 80
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+  }
+}
