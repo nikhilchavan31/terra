@@ -1,0 +1,4 @@
+myregion = "us-east-1"
+myaccess_key = " your-access-key"
+secret_key = "your-secret-key"
+ami_id = "ami-085386e29e44dacd7"
